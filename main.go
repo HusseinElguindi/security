@@ -1,11 +1,12 @@
 package main
 
+// TODO: NEW CYPHER TO ENCRYPT BYTES
+
 import (
 	"bufio"
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -43,7 +44,7 @@ func (t *Task) encrypt(key int) {
 			break
 		}
 		if err != nil {
-			log.Printf("read %d bytes: %v", n, err)
+			fmt.Printf("read %d bytes: %v\n", n, err)
 			break
 		}
 	}
@@ -88,7 +89,7 @@ func main() {
 		t := Task{}
 
 		fmt.Print("Filepath: ")
-		fPath := readline()
+		fPath := filepath.Clean(strings.ReplaceAll(readline(), "\"", ""))
 		t.File, err = os.Open(fPath)
 		if err != nil {
 			fmt.Println("File does not exist.")
@@ -96,8 +97,17 @@ func main() {
 		}
 		defer t.File.Close()
 
-		fmt.Print("New Filename: ")
-		t.newFile, err = os.OpenFile(filepath.Join(filepath.Dir(fPath), readline()+filepath.Ext(fPath)), os.O_CREATE|os.O_RDWR, 0666)
+		var newWritePath string
+		fmt.Print("Overwrite File [y/n]? ")
+		if !strings.EqualFold(readline(), "y") {
+			fmt.Print("New Filename: ")
+			newWritePath = filepath.Join(filepath.Dir(fPath), readline()+filepath.Ext(fPath))
+
+		} else {
+			newWritePath = fPath
+		}
+
+		t.newFile, err = os.OpenFile(newWritePath, os.O_CREATE|os.O_RDWR, 0666)
 		if err != nil {
 			fmt.Println("Error creating new file.")
 			return
@@ -114,12 +124,12 @@ func main() {
 		}
 
 		fmt.Print("Folder Path: ")
-		dirPath := readline()
+		dirPath := filepath.Clean(strings.ReplaceAll(readline(), "\"", ""))
 
 		var fileCount int
 		var filePaths []string
 		var files []os.FileInfo
-		fmt.Print("Every file in sub folders? [y/n] ")
+		fmt.Print("Search Files In Subfolders [y/n]? ")
 
 		if strings.EqualFold(readline(), "y") {
 			err = filepath.Walk(dirPath, func(path string, info os.FileInfo, err error) error {
@@ -143,16 +153,31 @@ func main() {
 			}
 		}
 
-		fmt.Print("New Files Prefix: ")
-		prefix := readline()
+		var overwrite bool
+		var keepName bool
+		var prefix string
+		var newPath string
+		fmt.Print("Overwrite Files [y/n]? ")
+		if strings.EqualFold(readline(), "y") {
+			overwrite = true
+		} else {
+			fmt.Print("Keep filenames [y/n]? ")
+			if strings.EqualFold(readline(), "y") {
+				keepName = true
 
-		newPath := filepath.Join(dirPath, "Security")
-		_, err = os.Stat(newPath)
-		if os.IsNotExist(err) {
-			err := os.MkdirAll(newPath, 0755)
-			if err != nil {
-				fmt.Println("Failed to create directory.")
-				return
+			} else {
+				fmt.Print("New Files Prefix: ")
+				prefix = readline()
+			}
+
+			newPath = filepath.Join(dirPath, "Security")
+			_, err = os.Stat(newPath)
+			if os.IsNotExist(err) {
+				err := os.MkdirAll(newPath, 0755)
+				if err != nil {
+					fmt.Println("Failed to create directory.")
+					return
+				}
 			}
 		}
 
@@ -173,20 +198,22 @@ func main() {
 				}
 
 				fPath = filepath.Join(dirPath, f.Name())
-				newWritePath = filepath.Join(newPath, fmt.Sprintf("%s_%d%s", prefix, i, filepath.Ext(fPath)))
-
 			} else {
 				fPath = filePaths[x]
+			}
+
+			if overwrite {
+				newWritePath = fPath
+			} else if keepName {
+				newWritePath = filepath.Join(newPath, filepath.Base(fPath))
+			} else {
 				newWritePath = filepath.Join(newPath, fmt.Sprintf("%s_%d%s", prefix, i, filepath.Ext(fPath)))
+				i++
 			}
 
 			t := Task{}
 			t.wg = wg
 			wg.Add(1)
-
-			i++
-			// // fPath := filepath.Join(dirPath, f.Name()) // f.Name() could be full path so line is useless
-			// fPath := f.Name() // f.Name() could be full path so line is useless
 
 			// fmt.Println(fPath)
 			t.File, err = os.Open(fPath)
