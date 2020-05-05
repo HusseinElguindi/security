@@ -20,7 +20,8 @@ $ go run main.go
 >- **Option 2:** Build the program
 ```shell
 $ go build main.go
-$ main.exe (Windows) or ./main (Linux and MacOS)
+$ main.exe (Windows)
+$ ./main (Linux and MacOS)
 ```
 Once the program is running, everything is self-explanatory and intuitive.
 
