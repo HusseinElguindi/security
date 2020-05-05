@@ -11,5 +11,5 @@ $ brew install fvcproductions
 >- Build the program
 ```shell
 $ go build main.go
-$ main.exe (Windows) or ./main (Linux & MacOS)
+$ main.exe (Windows) or ./main (Linux and MacOS)
 ```
