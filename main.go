@@ -1,6 +1,9 @@
+// HUSSEIN ELGUINDI
+// MAY 5, 2020 12:50AM
+
 package main
 
-// TODO: NEW CYPHER TO ENCRYPT BYTES
+// TODO: NEW CIPHER TO ENCRYPT BYTES
 
 import (
 	"bufio"
@@ -82,7 +85,7 @@ func main() {
 
 	if choice == "1" {
 		key, err := getKey()
-		if err != nil {
+		if err != nil || key == 0 {
 			return
 		}
 
@@ -91,8 +94,8 @@ func main() {
 		fmt.Print("Filepath: ")
 		fPath := filepath.Clean(strings.ReplaceAll(readline(), "\"", ""))
 		t.File, err = os.Open(fPath)
-		if err != nil {
-			fmt.Println("File does not exist.")
+		if err != nil || fPath == "." {
+			fmt.Println("File does not exist or path is not valid.")
 			return
 		}
 		defer t.File.Close()
@@ -119,12 +122,17 @@ func main() {
 
 	} else if choice == "2" {
 		key, err := getKey()
-		if err != nil {
+		if err != nil || key == 0 {
 			return
 		}
 
 		fmt.Print("Folder Path: ")
-		dirPath := filepath.Clean(strings.ReplaceAll(readline(), "\"", ""))
+		dirPath := strings.ReplaceAll(readline(), "\"", "")
+		if strings.ReplaceAll(dirPath, " ", "") == "" {
+			fmt.Println("Path is not valid.")
+			return
+		}
+		dirPath = filepath.Clean(dirPath)
 
 		var fileCount int
 		var filePaths []string
