@@ -14,3 +14,5 @@ $ brew install fvcproductions
 $ go build main.go
 $ main.exe (Windows) or ./main (Linux and MacOS)
 ```
+## Author
+- **Hussein Elguindi** - *everything here*
