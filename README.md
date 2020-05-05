@@ -23,6 +23,7 @@ $ brew install fvcproductions
 $ go build main.go
 $ main.exe (Windows) or ./main (Linux and MacOS)
 ```
+Once the program is running, everything is self-explanatory and intuitive.
 
 ## TODO
 - [ ] New, more secure cipher for encyption
