@@ -29,4 +29,4 @@ $ main.exe (Windows) or ./main (Linux and MacOS)
 - [ ] Option to encypt/decrypt text
 
 ## Author
-- **Hussein Elguindi** - *everything here*
+- **Hussein Elguindi** - *all the work*
