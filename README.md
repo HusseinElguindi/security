@@ -13,11 +13,11 @@ Simple encryption and decryption in Go. No external libraries.
 
 ## Getting Started
 To start, you can run the program directly or build it into an executable.
-- **Option 1:** Run the program
+>- **Option 1:** Run the program
 ```shell
 $ go run main.go
 ```
-- **Option 2:** Build the program
+>- **Option 2:** Build the program
 ```shell
 $ go build main.go
 $ main.exe (Windows)
