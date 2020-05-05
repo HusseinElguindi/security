@@ -16,7 +16,6 @@ To start, you can run the program directly or build it into an executable.
 >- **Option 1:** Run the program
 ```shell
 $ go run main.go
-$ brew install fvcproductions
 ```
 >- **Option 2:** Build the program
 ```shell
