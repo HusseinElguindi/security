@@ -1,6 +1,6 @@
 # Security
 Simple encryption and decryption in Go. No external libraries.
-> Small disclaimer: encryption uses the bitwise operator on bytes. Not extremely secure.
+> Small disclaimer: encryption uses the bitwise operator on bytes. Not extremely secure. See [TODO](#TODO).
 
 ## Features
 - [x] Encrypt/decrypt single files
