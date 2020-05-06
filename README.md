@@ -1,3 +1,5 @@
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 # Security
 Simple encryption and decryption in Go. No external libraries.
 > Small disclaimer: encryption uses the bitwise operator on bytes. Not extremely secure. See [TODO](#TODO).
