@@ -3,6 +3,7 @@ Simple encryption and decryption in Go. No external libraries.
 > Small disclaimer: encryption uses the bitwise operator on bytes. Not extremely secure. See [TODO](#TODO).
 
 ## Features
+- [x] Encypt/decrypt text
 - [x] Encrypt/decrypt single files
 - [x] Encrypt/decrypt folders
 - [x] Encrypt/decrypt subfolders in folder
@@ -27,7 +28,6 @@ Once the program is running, everything is self-explanatory and intuitive.
 
 ## TODO
 - [ ] New, more secure cipher for encyption
-- [x] Option to encypt/decrypt text
 
 ## Author
 - **Hussein Elguindi** - *all the work*
