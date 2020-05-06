@@ -24,7 +24,7 @@ type Task struct {
 	wg      *sync.WaitGroup
 }
 
-func (t *Task) encrypt(key int) {
+func (t *Task) encryptFile(key int) {
 	if t.wg != nil {
 		defer t.wg.Done()
 	}
@@ -55,6 +55,43 @@ func (t *Task) encrypt(key int) {
 	fmt.Printf("Completed %s -> %s.\n", filepath.Base(t.File.Name()), filepath.Base(t.newFile.Name()))
 }
 
+func encryptString(r *bufio.Reader, key int) {
+
+	buf := make([]byte, 8) // buffer size here
+
+	n, err := r.Read(buf)
+	if buf[0] == '\r' || buf[0] == '\n' {
+		fmt.Println("Invalid text string.")
+		return
+	}
+
+	fmt.Print("Converted: ")
+
+	for {
+		if n > 0 {
+
+			for i := 0; i < n; i++ {
+				if buf[i] == '\r' || buf[i] == '\n' {
+					fmt.Printf("%s", string(buf[:n]))
+					return
+				}
+				buf[i] ^= byte(key)
+			}
+			fmt.Printf("%s", string(buf[:n]))
+		}
+
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			fmt.Printf("read %d bytes: %v\n", n, err)
+			break
+		}
+
+		n, err = r.Read(buf)
+	}
+}
+
 func readline() string {
 	bio := bufio.NewReader(os.Stdin)
 	line, _, err := bio.ReadLine()
@@ -80,6 +117,7 @@ func main() {
 	fmt.Println("Security - Hussein Elguindi")
 	fmt.Println("1. Encrypt/Decrypt File")
 	fmt.Println("2. Encrypt/Decrypt Files In Folder")
+	fmt.Println("3. Encrypt/Decrypt Text")
 	fmt.Print("\nSelection: ")
 	choice := readline()
 
@@ -118,7 +156,7 @@ func main() {
 		defer t.newFile.Close()
 
 		fmt.Println("\nStarting...")
-		t.encrypt(key)
+		t.encryptFile(key)
 
 	} else if choice == "2" {
 		key, err := getKey()
@@ -238,10 +276,21 @@ func main() {
 			}
 			defer t.newFile.Close()
 
-			go t.encrypt(key)
+			go t.encryptFile(key)
 		}
 
 		wg.Wait()
+
+	} else if choice == "3" {
+
+		key, err := getKey()
+		if err != nil || key == 0 {
+			return
+		}
+
+		fmt.Print("\nText: ")
+		bio := bufio.NewReader(os.Stdin)
+		encryptString(bio, key)
 
 	} else {
 		fmt.Println("Invalid selection.")
