@@ -27,7 +27,7 @@ Once the program is running, everything is self-explanatory and intuitive.
 
 ## TODO
 - [ ] New, more secure cipher for encyption
-- [ ] Option to encypt/decrypt text
+- [x] Option to encypt/decrypt text
 
 ## Author
 - **Hussein Elguindi** - *all the work*
