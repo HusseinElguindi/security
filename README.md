@@ -13,12 +13,12 @@ Simple encryption and decryption in Go. No external libraries.
 - Save new files with original name in new folder
 
 ## Getting Started
-To start, you can run the program directly or build it into an executable.
->- **Option 1:** Run the program
+To start, clone the repo. Now, you can run the program directly or build it into an executable.
+>- **Option 1:** Running the program directly
 ```shell
 $ go run main.go
 ```
->- **Option 2:** Build the program
+>- **Option 2:** Building the program
 ```shell
 $ go build main.go
 $ main.exe (Windows)
