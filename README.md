@@ -3,14 +3,14 @@ Simple encryption and decryption in Go. No external libraries.
 > Small disclaimer: encryption uses the bitwise operator on bytes. Not extremely secure. See [TODO](#TODO).
 
 ## Features
-- [x] Encypt/decrypt text
-- [x] Encrypt/decrypt single files
-- [x] Encrypt/decrypt folders
-- [x] Encrypt/decrypt subfolders in folder
-- [x] Overwrite files
-- [x] Encrypt/decrypt to new folder
-- [x] Save new files with prefix
-- [x] Save new files with original name in new folder
+- Encypt/decrypt text
+- Encrypt/decrypt single files
+- Encrypt/decrypt folders
+- Encrypt/decrypt subfolders in folder
+- Overwrite files
+- Encrypt/decrypt to new folder
+- Save new files with prefix
+- Save new files with original name in new folder
 
 ## Getting Started
 To start, you can run the program directly or build it into an executable.
