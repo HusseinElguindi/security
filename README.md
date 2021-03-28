@@ -1,5 +1,5 @@
 # Security
-Simple encryption and decryption in Go. No external libraries.
+Simple (unsecure) encryption and decryption in Go. No external libraries.
 > Disclaimer: encryption uses the bitwise operator on bytes. NOT SECURE. This is not meant to be very secure, but to simply teach and show the idea of encryption, while using a simple encription technique. See the unchecked [Features](#Features).
 
 ## Features
